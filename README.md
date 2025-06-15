@@ -39,10 +39,10 @@ npm run dev
 ```
 
 This will:
-- Start the Express server on port 5000
+- Start the Express server on port 5001
 - Enable hot module replacement for instant updates
 - Serve both the API and client application
-- Open the game at `http://localhost:5000`
+- Open the game at `http://localhost:5001`
 
 ### Production Mode
 
