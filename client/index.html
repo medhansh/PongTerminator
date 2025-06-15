@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pong Clone</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        overflow: hidden;
+        font-family: 'Courier New', monospace;
+      }
+      
+      canvas {
+        display: block;
+        background: #000;
+        border: 2px solid #00ff00;
+      }
+      
+      .game-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        background: #000;
+      }
+      
+      .controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #00ff00;
+        text-align: center;
+        font-size: 14px;
+      }
+      
+      .score-display {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #00ff00;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 0 0 10px #00ff00;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
