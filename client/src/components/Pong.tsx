@@ -96,8 +96,8 @@ const Pong: React.FC = () => {
       incrementAiScore
     } = usePong.getState();
 
-    // Handle player movement
-    if (currentGameState === 'playing') {
+    // Handle player movement (allow movement in all states for testing)
+    if (currentGameState === 'playing' || currentGameState === 'menu') {
       const moveSpeed = PADDLE_SPEED;
       
       if (keys.ArrowUp || keys.KeyW) {
@@ -213,6 +213,17 @@ const Pong: React.FC = () => {
     // Get latest state for rendering
     const renderState = usePong.getState();
 
+    // Debug log to see if we're rendering
+    if (Math.random() < 0.01) { // Log occasionally to avoid spam
+      console.log('Rendering:', {
+        playerY: renderState.playerY,
+        aiY: renderState.aiY,
+        ballX: renderState.ballX,
+        ballY: renderState.ballY,
+        gameState: renderState.gameState
+      });
+    }
+
     // Clear canvas
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -249,8 +260,21 @@ const Pong: React.FC = () => {
   }, [gameLoop]);
 
   return (
-    <div style={{ position: 'relative' }}>
-      <div className="score-display">
+    <div style={{ 
+      position: 'relative', 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center',
+      padding: '20px',
+      backgroundColor: '#000',
+      minHeight: '100vh'
+    }}>
+      <div style={{ 
+        color: '#00ff00', 
+        fontSize: '24px', 
+        fontFamily: 'monospace',
+        marginBottom: '10px' 
+      }}>
         Player: {playerScore} | AI: {aiScore}
       </div>
       
@@ -260,11 +284,18 @@ const Pong: React.FC = () => {
         height={CANVAS_HEIGHT}
         style={{
           border: '2px solid #00ff00',
-          backgroundColor: '#000000'
+          backgroundColor: '#000000',
+          display: 'block'
         }}
       />
       
-      <div className="controls">
+      <div style={{ 
+        color: '#00ff00', 
+        fontSize: '16px', 
+        fontFamily: 'monospace',
+        marginTop: '10px',
+        textAlign: 'center'
+      }}>
         {gameState === 'menu' && (
           <div>
             <div>Press SPACE to start</div>
