@@ -60,18 +60,8 @@ const Pong: React.FC = () => {
     initAudio();
   }, []);
 
-  // Handle player controls
+  // Handle player controls (only for menu/game state changes)
   useEffect(() => {
-    const moveSpeed = PADDLE_SPEED;
-    
-    if (keys.ArrowUp || keys.KeyW) {
-      updatePlayerY(Math.max(0, playerY - moveSpeed));
-      console.log('Player moving up:', playerY);
-    }
-    if (keys.ArrowDown || keys.KeyS) {
-      updatePlayerY(Math.min(CANVAS_HEIGHT - PADDLE_HEIGHT, playerY + moveSpeed));
-      console.log('Player moving down:', playerY);
-    }
     if (keys.Space && gameState === 'menu') {
       setGameState('playing');
       console.log('Game started');
@@ -80,7 +70,24 @@ const Pong: React.FC = () => {
       resetGame();
       console.log('Game reset');
     }
-  }, [keys, playerY, gameState, updatePlayerY, setGameState, resetGame]);
+  }, [keys.Space, keys.KeyR, gameState, setGameState, resetGame]);
+
+  // Player movement logic (moved to game loop)
+  const handlePlayerMovement = useCallback(() => {
+    const moveSpeed = PADDLE_SPEED;
+    let newPlayerY = playerY;
+    
+    if (keys.ArrowUp || keys.KeyW) {
+      newPlayerY = Math.max(0, playerY - moveSpeed);
+    }
+    if (keys.ArrowDown || keys.KeyS) {
+      newPlayerY = Math.min(CANVAS_HEIGHT - PADDLE_HEIGHT, playerY + moveSpeed);
+    }
+    
+    if (newPlayerY !== playerY) {
+      updatePlayerY(newPlayerY);
+    }
+  }, [keys.ArrowUp, keys.KeyW, keys.ArrowDown, keys.KeyS, playerY, updatePlayerY]);
 
   // AI logic
   const updateAI = useCallback(() => {
